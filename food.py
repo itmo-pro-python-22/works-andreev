@@ -3,8 +3,11 @@ class Food:
         self.name = name
         self.taste = taste
 
-    def get_full_name(self):
+    def __str__(self):
         return f'{self.name} ({self.taste})'
+
+    def __eq__(self, other):
+        return type(other) == Food and self.name == other.name and self.taste == other.taste
 
 
 class Drink:
@@ -13,15 +16,18 @@ class Drink:
         self.type = drink_type
         self.price = price
 
-    def get_full_name(self):
+    def __str__(self):
         return f'{self.type} "{self.name}" ({self.price})'
 
 
-cake = Food('Торт', 'вкусный')
-print(cake.get_full_name())
+cake_1 = Food('Торт', 'вкусный')
+cake_2 = Food('Торт', 'вкусный')
+print(cake_1 == cake_2)
 
 sushi = Food('Суши', 'вегетарианские')
-print(sushi.get_full_name())
+print(sushi)
 
 latte = Drink('Латте', 'Кофе', 220)
-print(latte.get_full_name())
+print(latte)
+
+print(sushi == 5)
