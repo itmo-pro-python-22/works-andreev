@@ -3,6 +3,8 @@ class Food:
         self.name = 'Торт'
         self.taste = 'вкусный'
 
+    def get_full_name(self):
+        return f'{self.name} ({self.taste})'
 
 cake = Food()
 print(cake.name, cake.taste)
