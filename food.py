@@ -23,5 +23,5 @@ print(cake.get_full_name())
 sushi = Food('Суши', 'вегетарианские')
 print(sushi.get_full_name())
 
-latte = Drink('Кофе', 'Латте', 220)
+latte = Drink('Латте', 'Кофе', 220)
 print(latte.get_full_name())
