@@ -16,9 +16,8 @@ class Food:
     def get_report(cls):
         return f'We have {cls.count} food items'
 
-    @staticmethod
-    def eat():
-        print('Food was eaten')
+    def consume(self):
+        print(f'{self.name} was eaten')
 
 
 class Drink:
@@ -37,9 +36,8 @@ class Drink:
     def get_report(cls):
         return f'We have {cls.count} drinks'
 
-    @staticmethod
-    def drink():
-        print('Drink was drunk')
+    def consume(self):
+        print(f'{self.name} was drunk')
 
 
 cake_1 = Food('Торт', 'вкусный')
@@ -51,8 +49,7 @@ sushi = Food('Суши', 'вегетарианские')
 print(sushi)
 
 print(Food.get_report())
-Food.eat()
-sushi.eat()
+sushi.consume()
 
 latte = Drink('Латте', 'Кофе', 220)
 print(latte)
@@ -60,6 +57,7 @@ print(latte)
 kvass = Drink('Натуральный', 'Квас', 150)
 print(kvass)
 
-Drink.drink()
-
 print(sushi == 5)
+
+for item in cake_1, cake_2, sushi, latte, kvass:
+    item.consume()
