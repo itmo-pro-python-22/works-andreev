@@ -1,10 +1,11 @@
 class Food:
     count = 0
 
-    def __init__(self, name, taste):
+    def __init__(self, name, taste, amount=1):
         self.name = name
         self.taste = taste
-        self.__class__.count += 1
+        self.amount = amount
+        self.__class__.count += amount
 
     def __str__(self):
         return f'{self.name} ({self.taste})'
@@ -17,7 +18,12 @@ class Food:
         return f'We have {cls.count} food items'
 
     def consume(self):
-        print(f'{self.name} was eaten')
+        if self.amount > 0:
+            print(f'{self.name} was eaten')
+            self.amount -= 1
+            self.__class__.count -= 1
+        else:
+            print(f'No {self.name} left')
 
 
 class Drink:
@@ -40,10 +46,8 @@ class Drink:
         print(f'{self.name} was drunk')
 
 
-cake_1 = Food('Торт', 'вкусный')
-cake_2 = Food('Торт', 'вкусный')
-cake_1.name = 'Тортик'
-print(cake_1 == cake_2)
+cake = Food('Торт', 'вкусный')
+print(cake)
 
 sushi = Food('Суши', 'вегетарианские')
 print(sushi)
@@ -59,5 +63,5 @@ print(kvass)
 
 print(sushi == 5)
 
-for item in cake_1, cake_2, sushi, latte, kvass:
+for item in cake, sushi, latte, kvass:
     item.consume()
