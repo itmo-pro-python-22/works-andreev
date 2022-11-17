@@ -1,8 +1,9 @@
 class Item:
     count = 0
 
-    def __init__(self, name, amount=1):
+    def __init__(self, name, price, amount=1):
         self.name = name
+        self.price = price
         self._amount = amount
         self.__class__.count += amount
 
@@ -16,14 +17,17 @@ class Item:
             self.__class__.count += new_amount - self._amount
             self._amount = new_amount
 
+    def __str__(self):
+        return f'{self.name} ({self.price}), {self._amount} left'
+
 
 class Food(Item):
-    def __init__(self, name, taste, amount=1):
-        super().__init__(name, amount)
+    def __init__(self, name, taste, price, amount=1):
+        super().__init__(name, price, amount)
         self.taste = taste
 
     def __str__(self):
-        return f'{self.name} ({self.taste}), {self._amount} left'
+        return f'{self.name} ({self.taste}) ({self.price}), {self._amount} left'
 
     def __eq__(self, other):
         return type(other) == Food and self.name == other.name and self.taste == other.taste
@@ -41,44 +45,34 @@ class Food(Item):
             print(f'No {self.name} left')
 
 
-class Drink:
-    count = 0
-
-    def __init__(self, name, drink_type, price):
-        self.name = name
+class Drink(Item):
+    def __init__(self, name, drink_type, price, amount=1):
+        super().__init__(name, price, amount)
         self.type = drink_type
-        self.price = price
-        self.__class__.count += 1
 
     def __str__(self):
-        return f'{self.type} "{self.name}" ({self.price})'
+        return f'{self.type} "{self.name}" ({self.price}), {self._amount} left'
 
     @classmethod
     def get_report(cls):
         return f'We have {cls.count} drinks'
 
     def consume(self):
-        print(f'{self.name} was drunk')
+        if self._amount > 0:
+            print(f'{self.name} was drunk')
+            self._amount -= 1
+            self.__class__.count -= 1
+        else:
+            print(f'No {self.name} left')
 
 
-cake = Food('Торт', 'вкусный')
-print(cake)
-
-sushi = Food('Суши', 'вегетарианские')
-print(sushi)
-
-print(Food.get_report())
-sushi.consume()
-sushi.amount += 3
-
+cake = Food('Торт', 'вкусный', 360)
+sushi = Food('Суши', 'вегетарианские', 550, 3)
 latte = Drink('Латте', 'Кофе', 220)
-print(latte)
+kvass = Drink('Натуральный', 'Квас', 150, 5)
+dual_sense = Item('DualSense 5', 7000)
 
-kvass = Drink('Натуральный', 'Квас', 150)
-print(kvass)
 
-print(sushi == 5)
-
-for item in cake, sushi, latte, kvass:
-    item.consume()
-    print(item.name)
+for item in cake, sushi, latte, kvass, dual_sense:
+    # item.consume()
+    print(item)
