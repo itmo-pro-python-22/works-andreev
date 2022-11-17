@@ -1,25 +1,29 @@
-class Food:
+class Item:
     count = 0
 
-    def __init__(self, name, taste, amount=1):
+    def __init__(self, name, amount=1):
         self.name = name
-        self.taste = taste
-        self.__amount = amount
+        self._amount = amount
         self.__class__.count += amount
 
     @property
     def amount(self):
-        return self.__amount
+        return self._amount
 
     @amount.setter
-    def amount(self, value):
-        if value > 0:
-            self.__class__.count += value - self.__amount
-            self.__amount = value
+    def amount(self, new_amount):
+        if new_amount > 0:
+            self.__class__.count += new_amount - self._amount
+            self._amount = new_amount
 
+
+class Food(Item):
+    def __init__(self, name, taste, amount=1):
+        super().__init__(name, amount)
+        self.taste = taste
 
     def __str__(self):
-        return f'{self.name} ({self.taste}), {self.__amount} left'
+        return f'{self.name} ({self.taste}), {self._amount} left'
 
     def __eq__(self, other):
         return type(other) == Food and self.name == other.name and self.taste == other.taste
@@ -29,9 +33,9 @@ class Food:
         return f'We have {cls.count} food items'
 
     def consume(self):
-        if self.__amount > 0:
+        if self._amount > 0:
             print(f'{self.name} was eaten')
-            self.__amount -= 1
+            self._amount -= 1
             self.__class__.count -= 1
         else:
             print(f'No {self.name} left')
@@ -77,4 +81,4 @@ print(sushi == 5)
 
 for item in cake, sushi, latte, kvass:
     item.consume()
-    print(item)
+    print(item.name)
