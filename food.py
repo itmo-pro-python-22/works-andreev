@@ -49,7 +49,19 @@ class IConsumable:
         pass
 
 
-class Food(Item, IConsumable):
+class ICookable:
+    @abstractmethod
+    def cook(self):
+        pass
+
+
+class IBrewable:
+    @abstractmethod
+    def brew(self):
+        pass
+
+
+class Food(Item, IConsumable, ICookable):
     def __init__(self, name, taste, price, amount=1):
         super().__init__(name, price, amount)
         self.taste = taste
@@ -72,8 +84,11 @@ class Food(Item, IConsumable):
         else:
             print(f'No {self.name} left')
 
+    def cook(self):
+        pass
 
-class Drink(Item, IConsumable):
+
+class Drink(Item, IConsumable, IBrewable):
     def __init__(self, name, drink_type, price, amount=1):
         super().__init__(name, price, amount)
         self.type = drink_type
@@ -92,6 +107,9 @@ class Drink(Item, IConsumable):
             self.__class__.count -= 1
         else:
             print(f'No {self.name} left')
+
+    def brew(self):
+        pass
 
 
 cake = Food('Торт', 'вкусный', 360)
