@@ -23,12 +23,20 @@ class Item:
 
 class ItemFileExporter:
     def __init__(self, filename):
-        self.__filename = filename
+        self._filename = filename
 
     def export(self, items):
-        file = open(self.__filename, 'w')
+        file = open(self._filename, 'w', encoding='utf-8')
         for item in items:
             print(item, file=file)
+        file.close()
+
+
+class ItemCsvExporter(ItemFileExporter):
+    def export(self, items):
+        file = open(self._filename, 'w', encoding='utf-8')
+        for item in items:
+            print(item.name, item.price, item.count, sep=',', file=file)
         file.close()
 
 
@@ -79,14 +87,16 @@ class Drink(Item):
 
 cake = Food('Торт', 'вкусный', 360)
 sushi = Food('Суши', 'вегетарианские', 550, 3)
-latte = Drink('Латте', 'Кофе', 220)
+latte = Drink('Латте', 'Кофе', 330)
 kvass = Drink('Натуральный', 'Квас', 150, 5)
 dual_sense = Item('DualSense 5', 7000)
 
 
 for item in cake, sushi, latte, kvass, dual_sense:
-    # item.consume()
     print(item)
 
 exporter = ItemFileExporter('items.txt')
 exporter.export([cake, sushi, latte, kvass, dual_sense])
+
+table_exporter = ItemCsvExporter('items.csv')
+table_exporter.export([cake, sushi, latte, kvass, dual_sense])
