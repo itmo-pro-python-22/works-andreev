@@ -21,6 +21,17 @@ class Item:
         return f'{self.name} ({self.price}), {self._amount} left'
 
 
+class ItemFileExporter:
+    def __init__(self, filename):
+        self.__filename = filename
+
+    def export(self, items):
+        file = open(self.__filename, 'w')
+        for item in items:
+            print(item, file=file)
+        file.close()
+
+
 class Food(Item):
     def __init__(self, name, taste, price, amount=1):
         super().__init__(name, price, amount)
@@ -76,3 +87,6 @@ dual_sense = Item('DualSense 5', 7000)
 for item in cake, sushi, latte, kvass, dual_sense:
     # item.consume()
     print(item)
+
+exporter = ItemFileExporter('items.txt')
+exporter.export([cake, sushi, latte, kvass, dual_sense])
