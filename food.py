@@ -1,3 +1,6 @@
+from abc import abstractmethod
+
+
 class Item:
     count = 0
 
@@ -40,7 +43,13 @@ class ItemCsvExporter(ItemFileExporter):
         file.close()
 
 
-class Food(Item):
+class IConsumable:
+    @abstractmethod
+    def consume(self):
+        pass
+
+
+class Food(Item, IConsumable):
     def __init__(self, name, taste, price, amount=1):
         super().__init__(name, price, amount)
         self.taste = taste
@@ -64,7 +73,7 @@ class Food(Item):
             print(f'No {self.name} left')
 
 
-class Drink(Item):
+class Drink(Item, IConsumable):
     def __init__(self, name, drink_type, price, amount=1):
         super().__init__(name, price, amount)
         self.type = drink_type
@@ -90,6 +99,8 @@ sushi = Food('Суши', 'вегетарианские', 550, 3)
 latte = Drink('Латте', 'Кофе', 330)
 kvass = Drink('Натуральный', 'Квас', 150, 5)
 dual_sense = Item('DualSense 5', 7000)
+
+cake.amount += 5
 
 
 for item in cake, sushi, latte, kvass, dual_sense:
