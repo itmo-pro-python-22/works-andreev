@@ -19,6 +19,8 @@ class Item:
         if new_amount > 0:
             self.__class__.count += new_amount - self._amount
             self._amount = new_amount
+        else:
+            raise ValueError('Cannot save negative amount')
 
     def __str__(self):
         return f'{self.name} ({self.price}), {self._amount} left'
@@ -119,6 +121,7 @@ kvass = Drink('Натуральный', 'Квас', 150, 5)
 dual_sense = Item('DualSense 5', 7000)
 
 cake.amount += 5
+cake.amount -= 10
 
 
 for item in cake, sushi, latte, kvass, dual_sense:
