@@ -2,20 +2,23 @@ from abc import abstractmethod
 
 
 class Item:
-    count = 0
+    count: int = 0
+    name: str
+    price: int
+    _amount: int
 
-    def __init__(self, name, price, amount=1):
+    def __init__(self, name: str, price: int, amount: int = 1) -> None:
         self.name = name
         self.price = price
         self._amount = amount
         self.__class__.count += amount
 
     @property
-    def amount(self):
+    def amount(self) -> int:
         return self._amount
 
     @amount.setter
-    def amount(self, new_amount):
+    def amount(self, new_amount: int) -> None:
         if new_amount > 0:
             self.__class__.count += new_amount - self._amount
             self._amount = new_amount
