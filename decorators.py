@@ -1,16 +1,22 @@
-from typing import List, Callable
+from typing import Callable, Any
 
 
 def f(x: int) -> int:
-    return 7 ** x - 9
+    return x // 2 + 7 ** x
 
 
-data: List[int] = [3, -2, -7, 6, 4, 0, -5]
-data.sort(key=lambda x: x ** 2)
-print(*data)
+def logger(func: Callable) -> Callable:
+    def wrapper(*args, **kwargs):
+        print('Start function')
+        func(*args, **kwargs)
+        print('End function')
+    return wrapper
 
-# Callable[[Типы параметров], Тип возвр. значения]
-calc: Callable[[int], int] = f
 
-data.sort(key=calc)
-print(*data)
+@logger
+def greet(name: str) -> None:
+    print(f'Hello {name}!')
+
+
+greet('Nick')
+greet('money')
